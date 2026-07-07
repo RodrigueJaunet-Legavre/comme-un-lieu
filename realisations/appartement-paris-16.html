@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appartement Paris 16e — Rénovation complète | Comme un Lieu</title>
+  <meta name="description" content="Rénovation complète d'un appartement familial Paris 16e — îlot cannelé, bar à vin et entrée en chêne sur-mesure. Réalisé par Corinne Joubert.">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <a href="../index.html" class="navbar-logo">
+      <span class="logo-text">COMME UN LIEU</span>
+      <span class="logo-sub">Rénovation — Architecture d'Intérieur</span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="../index.html" class="nav-link">Accueil</a>
+      <a href="../apropos.html" class="nav-link">À propos</a>
+      <a href="../realisations.html" class="nav-link active">Nos Réalisations</a>
+      <a href="../contact.html" class="nav-link">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-overlay" id="mobileOverlay">
+      <button class="overlay-close" id="overlayClose">✕</button>
+      <nav class="overlay-nav">
+        <a href="../index.html" class="overlay-link">Accueil</a>
+        <a href="../apropos.html" class="overlay-link">À propos</a>
+        <a href="../realisations.html" class="overlay-link">Nos Réalisations</a>
+        <a href="../contact.html" class="overlay-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HEADER PROJET -->
+  <section class="projet-header fade-in">
+    <a href="../realisations.html" class="retour-lien">← Toutes les réalisations</a>
+    <span class="tag">Rénovation complète</span>
+    <h1 class="projet-titre reveal-mask">Appartement — Paris 16e</h1>
+    <p class="projet-intro">Rénovation complète d'un appartement familial dans le 16e arrondissement de Paris. Réagencement des volumes, création d'un îlot central cannelé, d'un bar à vin sur-mesure et d'une entrée sculptée en chêne — un dialogue entre lignes courbes et matières naturelles.</p>
+  </section>
+
+  <!-- SECTION ENTRÉE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Entrée</h2>
+
+    <p class="ba-slider-context reveal-mask">Une entrée entièrement réagencée — de la structure brute à l'arche cannelée sur-mesure en chêne.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/appartement-paris-16/entree-apres.jpg" alt="Entrée après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/appartement-paris-16/entree-pendant-1.jpg" alt="Entrée avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <div class="galerie-secondaire">
+      <img src="../images/realisations/appartement-paris-16/entree-pendant-2.jpg" alt="Entrée en cours de travaux" class="galerie-img reveal-image">
+      <img src="../images/realisations/appartement-paris-16/entree-pendant-3.jpg" alt="Travaux entrée" class="galerie-img reveal-image">
+    </div>
+  </section>
+
+  <!-- SECTION CUISINE & ÎLOT CENTRAL -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Cuisine &amp; Îlot central</h2>
+
+    <p class="ba-slider-context reveal-mask">Les volumes repensés autour d'un îlot central cannelé en chêne, qui structure et habite désormais l'espace.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/appartement-paris-16/cuisine-apres-1.png" alt="Cuisine après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/appartement-paris-16/cuisine-pendant.jpg" alt="Cuisine avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <div class="galerie-grid">
+      <img src="../images/realisations/appartement-paris-16/cuisine-apres-2.png" alt="Cuisine vue d'ensemble" class="galerie-grid-img lightbox-trigger reveal-image" data-cursor="true" data-src="../images/realisations/appartement-paris-16/cuisine-apres-2.png">
+      <img src="../images/realisations/appartement-paris-16/ilot-apres.png" alt="Îlot central cannelé" class="galerie-grid-img lightbox-trigger reveal-image" data-cursor="true" data-src="../images/realisations/appartement-paris-16/ilot-apres.png">
+      <img src="../images/realisations/appartement-paris-16/cuisine-detail-1.jpg" alt="Détail cuisine" class="galerie-grid-img lightbox-trigger reveal-image" data-cursor="true" data-src="../images/realisations/appartement-paris-16/cuisine-detail-1.jpg">
+      <img src="../images/realisations/appartement-paris-16/cuisine-detail-2.png" alt="Détail finitions cuisine" class="galerie-grid-img lightbox-trigger reveal-image" data-cursor="true" data-src="../images/realisations/appartement-paris-16/cuisine-detail-2.png">
+    </div>
+  </section>
+
+  <!-- SECTION BAR À VIN -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Bar à vin</h2>
+    <div class="bar-grid">
+      <img src="../images/realisations/appartement-paris-16/bar-apres.png" alt="Bar à vin sur-mesure" class="bar-img-main reveal-image" data-cursor="true">
+      <img src="../images/realisations/appartement-paris-16/bar-apres-zoom.png" alt="Détail bar à vin" class="bar-img-detail reveal-image" data-cursor="true">
+    </div>
+  </section>
+
+  <!-- SECTION COULISSES DE FABRICATION -->
+  <section class="projet-section fabrication fade-in">
+    <div class="fabrication-inner">
+      <p class="fabrication-intro">Chaque pièce sur-mesure est dessinée puis façonnée en atelier, avant d'être posée sur site.</p>
+      <div class="fabrication-galerie">
+        <img src="../images/realisations/appartement-paris-16/fabrication-1.jpg" alt="Fabrication menuiserie" class="fab-img reveal-image">
+        <img src="../images/realisations/appartement-paris-16/fabrication-2.jpg" alt="Atelier fabrication" class="fab-img reveal-image">
+        <img src="../images/realisations/appartement-paris-16/fabrication-3.jpg" alt="Détail fabrication" class="fab-img reveal-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANDEAU -->
+  <section class="cta-bandeau">
+    <div class="cta-inner">
+      <p class="cta-text">Un projet ? Parlons-en.</p>
+      <a href="../contact.html" class="btn-cta">Contactez-nous</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">COMME UN LIEU</div>
+        <div class="footer-tagline">Rénovation &amp; Architecture d'Intérieur à Paris</div>
+      </div>
+      <div class="footer-coords">
+        <p>6, rue Corot — 75016 Paris</p>
+        <p><a href="tel:+33627203075">+33 (0)6 27 20 30 75</a></p>
+        <p><a href="mailto:cj@comme-un-lieu.com">cj@comme-un-lieu.com</a></p>
+      </div>
+      <nav class="footer-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../apropos.html">À propos</a>
+        <a href="../realisations.html">Nos Réalisations</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-copy">© 2026 Comme un Lieu — Corinne Joubert</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="Vue agrandie">
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

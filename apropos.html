@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À propos — Comme un Lieu | Corinne Joubert, architecte d'intérieur Paris</title>
+  <meta name="description" content="Corinne Joubert, architecte d'intérieur et décoratrice à Paris, conçoit des intérieurs sobres et intemporels en Île-de-France.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <a href="/index.html" class="navbar-logo">
+      <span class="logo-text">COMME UN LIEU</span>
+      <span class="logo-sub">Rénovation — Architecture d'Intérieur</span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="/index.html" class="nav-link">Accueil</a>
+      <a href="/apropos.html" class="nav-link active">À propos</a>
+      <a href="/realisations.html" class="nav-link">Nos Réalisations</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-overlay" id="mobileOverlay">
+      <button class="overlay-close" id="overlayClose">✕</button>
+      <nav class="overlay-nav">
+        <a href="/index.html" class="overlay-link">Accueil</a>
+        <a href="/apropos.html" class="overlay-link">À propos</a>
+        <a href="/realisations.html" class="overlay-link">Nos Réalisations</a>
+        <a href="/contact.html" class="overlay-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- BANNIÈRE TITRE -->
+  <section class="page-banner">
+    <div class="page-banner-inner">
+      <h1 class="page-banner-titre reveal-mask">À propos</h1>
+    </div>
+  </section>
+
+  <!-- INTRO PORTRAIT + TEXTE -->
+  <section class="apropos-intro">
+    <div class="apropos-intro-inner">
+      <div class="apropos-img-wrap">
+        <img src="images/realisations/appartement-paris-16/fabrication-1.jpg" alt="Corinne Joubert — architecte d'intérieur" class="apropos-portrait reveal-image">
+      </div>
+      <div class="apropos-texte fade-in">
+        <p>Corinne Joubert conçoit et pilote des projets de rénovation et d'architecture d'intérieur à Paris et en Île-de-France. Attentive à l'usage autant qu'à l'esthétique, elle imagine des intérieurs sobres et intemporels, où chaque détail — matière, lumière, mobilier sur-mesure — trouve sa juste place.</p>
+        <p>De la conception à la livraison, elle accompagne ses clients à chaque étape du chantier, en lien étroit avec un réseau d'artisans et de menuisiers d'exception.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTHODE STICKY -->
+  <section class="methode">
+    <div class="methode-sticky">
+      <img src="images/realisations/appartement-paris-16/ilot-apres.png" alt="Détail de réalisation — Comme un Lieu" class="methode-sticky-img reveal-image">
+    </div>
+    <div class="methode-scroll">
+      <div class="methode-etape fade-in">
+        <span class="methode-num">01</span>
+        <h3 class="methode-titre reveal-mask">Écoute</h3>
+        <p class="methode-desc">Comprendre vos usages, vos envies et les contraintes du lieu.</p>
+      </div>
+      <div class="methode-etape fade-in">
+        <span class="methode-num">02</span>
+        <h3 class="methode-titre reveal-mask">Conception</h3>
+        <p class="methode-desc">Élaborer les plans, choisir les matières, dessiner le mobilier sur-mesure.</p>
+      </div>
+      <div class="methode-etape fade-in">
+        <span class="methode-num">03</span>
+        <h3 class="methode-titre reveal-mask">Réalisation</h3>
+        <p class="methode-desc">Coordonner les artisans et suivre chaque étape du chantier.</p>
+      </div>
+      <div class="methode-etape fade-in">
+        <span class="methode-num">04</span>
+        <h3 class="methode-titre reveal-mask">Livraison</h3>
+        <p class="methode-desc">Restituer un lieu abouti, fidèle au projet dessiné ensemble.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITATION PHOTO -->
+  <section class="citation-photo">
+    <img src="images/realisations/appartement-paris-16/fabrication-2.jpg" alt="Fabrication sur-mesure — Comme un Lieu" class="citation-img">
+    <div class="citation-overlay">
+      <blockquote class="citation-texte accent">« Un intérieur réussi ne se remarque pas — il se ressent. »</blockquote>
+    </div>
+  </section>
+
+  <!-- CTA BANDEAU -->
+  <section class="cta-bandeau">
+    <div class="cta-inner">
+      <p class="cta-text">Un projet ? Parlons-en.</p>
+      <a href="/contact.html" class="btn-cta">Contactez-nous</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">COMME UN LIEU</div>
+        <div class="footer-tagline">Rénovation &amp; Architecture d'Intérieur à Paris</div>
+      </div>
+      <div class="footer-coords">
+        <p>6, rue Corot — 75016 Paris</p>
+        <p><a href="tel:+33627203075">+33 (0)6 27 20 30 75</a></p>
+        <p><a href="mailto:cj@comme-un-lieu.com">cj@comme-un-lieu.com</a></p>
+      </div>
+      <nav class="footer-nav">
+        <a href="/index.html">Accueil</a>
+        <a href="/apropos.html">À propos</a>
+        <a href="/realisations.html">Nos Réalisations</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-copy">© 2026 Comme un Lieu — Corinne Joubert</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
