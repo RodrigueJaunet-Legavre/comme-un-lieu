@@ -11,7 +11,14 @@ if (!prefersReducedMotion) {
   // ── Smooth scroll avec fallback sécurisé ──
   if (typeof Lenis !== 'undefined') {
     try {
-      lenisInstance = new Lenis({ duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
+      // lenisInstance = new Lenis({
+      //   duration: 1.1,
+      //   easing: (t) => 1 - Math.pow(1 - t, 3),
+      //   orientation: 'vertical',
+      //   smoothWheel: true,
+      //   wheelMultiplier: 1,
+      //   touchMultiplier: 2,
+      // });
       function raf(time) {
         lenisInstance.raf(time);
         requestAnimationFrame(raf);
