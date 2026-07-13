@@ -8,13 +8,25 @@ let lenisInstance = null;
 if (!prefersReducedMotion) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Smooth scroll
-  lenisInstance = new Lenis({ duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
-  function raf(time) { lenisInstance.raf(time); requestAnimationFrame(raf); }
-  requestAnimationFrame(raf);
-  lenisInstance.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenisInstance.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  // ── Smooth scroll avec fallback sécurisé ──
+  if (typeof Lenis !== 'undefined') {
+    try {
+      lenisInstance = new Lenis({ duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
+      function raf(time) {
+        lenisInstance.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+      lenisInstance.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenisInstance.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } catch (e) {
+      console.warn('Lenis a échoué à s\'initialiser, scroll natif utilisé.', e);
+      lenisInstance = null;
+    }
+  } else {
+    console.warn('Lenis non chargé (CDN indisponible), scroll natif utilisé.');
+  }
 
   // Reveal texte (titres sans enfants HTML)
   document.querySelectorAll('.reveal-mask').forEach((el) => {
@@ -64,10 +76,16 @@ if (!prefersReducedMotion) {
     if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto') && !href.startsWith('tel')) {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        gsap.to(transitionEl, {
-          y: '0%', duration: 0.4, ease: 'power3.inOut',
-          onComplete: () => { window.location.href = href; }
-        });
+        const failsafe = setTimeout(() => { window.location.href = href; }, 700);
+        if (typeof gsap !== 'undefined' && document.querySelector('.page-transition')) {
+          gsap.to('.page-transition', {
+            y: '0%', duration: 0.4, ease: 'power3.inOut',
+            onComplete: () => {
+              clearTimeout(failsafe);
+              window.location.href = href;
+            }
+          });
+        }
       });
     }
   });

@@ -1150,7 +1150,10 @@ a {
 
 .page-transition {
   position: fixed; inset: 0; background: var(--noir);
-  z-index: 10000; transform: translateY(100%); pointer-events: none;
+  z-index: 10000;
+  transform: translateY(100%);
+  pointer-events: none;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
