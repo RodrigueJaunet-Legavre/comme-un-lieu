@@ -5,20 +5,39 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 let lenisInstance = null;
 
+// ── Garde-fou contextes WebGL ──
+const MAX_GL_CONTEXTS = 8;
+let activeGLContexts = 0;
+function canCreateGLContext() {
+  return GLEngine.supportsWebGL && activeGLContexts < MAX_GL_CONTEXTS;
+}
+
+// ── Attend que toutes les images de la page soient chargées ──
+function waitForImages() {
+  const images = Array.from(document.querySelectorAll('img'));
+  return Promise.all(images.map((img) => {
+    if (img.complete && img.naturalWidth) return Promise.resolve();
+    return new Promise((resolve) => {
+      img.addEventListener('load', resolve, { once: true });
+      img.addEventListener('error', resolve, { once: true });
+    });
+  }));
+}
+
 if (!prefersReducedMotion) {
   gsap.registerPlugin(ScrollTrigger);
 
   // ── Smooth scroll avec fallback sécurisé ──
   if (typeof Lenis !== 'undefined') {
     try {
-      // lenisInstance = new Lenis({
-      //   duration: 1.1,
-      //   easing: (t) => 1 - Math.pow(1 - t, 3),
-      //   orientation: 'vertical',
-      //   smoothWheel: true,
-      //   wheelMultiplier: 1,
-      //   touchMultiplier: 2,
-      // });
+      lenisInstance = new Lenis({
+        duration: 1.1,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+        orientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+      });
       function raf(time) {
         lenisInstance.raf(time);
         requestAnimationFrame(raf);
@@ -170,6 +189,92 @@ function initHeroScroll() {
   });
 }
 
+// ─── Distorsion liquide au survol (images de galerie) ───
+function initHoverDistortion(selector = '.gl-hover-wrapper') {
+  if (!GLEngine.supportsWebGL) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover)').matches) return;
+
+  document.querySelectorAll(selector).forEach((wrapper) => {
+    const img = wrapper.querySelector('img');
+    if (!img) return;
+    if (!canCreateGLContext()) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'gl-canvas';
+    wrapper.appendChild(canvas);
+    const gl = canvas.getContext('webgl', { alpha: false });
+    if (!gl) return;
+    const program = GLEngine.createProgram(gl, GLEngine.VERT_SRC, GLEngine.HOVER_FRAG_SRC);
+    if (!program) return;
+    activeGLContexts++;
+    gl.useProgram(program);
+    GLEngine.createQuad(gl, program);
+
+    const uMouse = gl.getUniformLocation(program, 'uMouse');
+    const uHover = gl.getUniformLocation(program, 'uHover');
+    const uTime = gl.getUniformLocation(program, 'uTime');
+
+    let texture = null, hoverAmount = 0, targetHover = 0, mouse = { x: 0.5, y: 0.5 }, raf = null;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, GLEngine.DPR_CAP);
+      canvas.width = wrapper.clientWidth * dpr;
+      canvas.height = wrapper.clientHeight * dpr;
+      canvas.style.width = wrapper.clientWidth + 'px';
+      canvas.style.height = wrapper.clientHeight + 'px';
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+
+    function setup() {
+      if (img.complete && img.naturalWidth) {
+        texture = GLEngine.loadTexture(gl, img);
+        resize();
+        canvas.style.opacity = '1';
+      } else {
+        img.addEventListener('load', setup, { once: true });
+      }
+    }
+    setup();
+
+    function render(time) {
+      if (!texture) { raf = requestAnimationFrame(render); return; }
+      hoverAmount += (targetHover - hoverAmount) * 0.08;
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(uMouse, mouse.x, mouse.y);
+      gl.uniform1f(uHover, hoverAmount);
+      gl.uniform1f(uTime, time * 0.001);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      raf = requestAnimationFrame(render);
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !raf) raf = requestAnimationFrame(render);
+        if (!entry.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; }
+      });
+    }, { threshold: 0.05 });
+    io.observe(wrapper);
+
+    wrapper.addEventListener('mouseenter', () => { targetHover = 1; });
+    wrapper.addEventListener('mouseleave', () => { targetHover = 0; });
+    wrapper.addEventListener('mousemove', (e) => {
+      const rect = wrapper.getBoundingClientRect();
+      mouse.x = (e.clientX - rect.left) / rect.width;
+      mouse.y = 1 - (e.clientY - rect.top) / rect.height;
+    });
+    window.addEventListener('resize', resize);
+    canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      activeGLContexts--;
+      canvas.style.opacity = '0';
+      if (raf) cancelAnimationFrame(raf);
+    });
+  });
+}
+
 // ─── Projets data & rendering (réalisations page) ───
 const projets = [
   {
@@ -186,7 +291,9 @@ function renderProjets() {
   grid.innerHTML = projets.map(p => `
     <a href="${p.lien}" class="projet-card fade-in">
       <div class="projet-card-img-wrap">
-        <img src="${p.image}" alt="${p.titre}" class="projet-card-img reveal-image">
+        <div class="projet-card-img reveal-image gl-hover-wrapper">
+          <img src="${p.image}" alt="${p.titre}" loading="lazy">
+        </div>
       </div>
       <div class="projet-card-info">
         <span class="tag">${p.tag}</span>
@@ -214,64 +321,133 @@ function renderProjets() {
   }
 }
 
-// ── BEFORE/AFTER SLIDER (Pointer Events — souris + tactile + clavier) ──
-document.querySelectorAll('.ba-slider').forEach((slider) => {
-  const beforeWrap = slider.querySelector('.ba-slider__before-wrap');
-  const beforeImg = slider.querySelector('.ba-slider__before');
-  const handle = slider.querySelector('.ba-slider__handle');
-  let current = 50;
-  let target = 50;
-  let raf = null;
+// ── BEFORE/AFTER SLIDER — transition liquide WebGL (Pointer Events — souris + tactile + clavier) ──
+function initLiquidSliders(selector = '.ba-slider') {
+  document.querySelectorAll(selector).forEach((slider) => {
+    const beforeImg = slider.querySelector('.ba-slider__before');
+    const afterImg = slider.querySelector('.ba-slider__after');
+    const beforeWrap = slider.querySelector('.ba-slider__before-wrap');
+    const handle = slider.querySelector('.ba-slider__handle');
+    if (!beforeImg || !afterImg) return;
 
-  function setWidth() {
-    beforeImg.style.setProperty('--ba-width', slider.offsetWidth + 'px');
-  }
+    let useGL = canCreateGLContext() && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let canvas, gl, program, uProgress, texA, texB, raf = null;
+    let current = 50, target = 50;
+    let visible = true;
 
-  function render() {
-    current += (target - current) * 0.18;
-    if (Math.abs(target - current) < 0.05) current = target;
-    beforeWrap.style.width = current + '%';
-    handle.style.left = current + '%';
-    slider.setAttribute('aria-valuenow', Math.round(current));
-    if (current !== target) {
-      raf = requestAnimationFrame(render);
-    } else {
-      raf = null;
+    function setBeforeWidth() {
+      beforeImg.style.setProperty('--ba-width', slider.offsetWidth + 'px');
     }
-  }
 
-  function updateFromClientX(clientX) {
-    const rect = slider.getBoundingClientRect();
-    target = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
-    if (!raf) raf = requestAnimationFrame(render);
-  }
+    function domFallback(pct) {
+      if (beforeWrap) beforeWrap.style.width = pct + '%';
+    }
 
-  // Init
-  setWidth();
-  beforeWrap.style.width = '50%';
-  handle.style.left = '50%';
+    function resize() {
+      setBeforeWidth();
+      if (!useGL) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, GLEngine.DPR_CAP);
+      canvas.width = slider.clientWidth * dpr;
+      canvas.height = slider.clientHeight * dpr;
+      canvas.style.width = slider.clientWidth + 'px';
+      canvas.style.height = slider.clientHeight + 'px';
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
 
-  let dragging = false;
-  slider.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    slider.setPointerCapture(e.pointerId);
-    updateFromClientX(e.clientX);
+    function render() {
+      current += (target - current) * 0.15;
+      if (useGL) {
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.uniform1f(uProgress, current / 100);
+        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texA);
+        gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texB);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      } else {
+        domFallback(current);
+      }
+      handle.style.left = current + '%';
+      slider.setAttribute('aria-valuenow', Math.round(current));
+      raf = (visible && Math.abs(target - current) > 0.05) ? requestAnimationFrame(render) : null;
+    }
+
+    function setupGL() {
+      canvas = document.createElement('canvas');
+      canvas.className = 'gl-canvas ba-slider__canvas';
+      slider.appendChild(canvas);
+      gl = canvas.getContext('webgl', { alpha: false });
+      program = gl && GLEngine.createProgram(gl, GLEngine.VERT_SRC, GLEngine.DISSOLVE_FRAG_SRC);
+      if (!gl || !program) { useGL = false; return; }
+      activeGLContexts++;
+      gl.useProgram(program);
+      GLEngine.createQuad(gl, program);
+      uProgress = gl.getUniformLocation(program, 'uProgress');
+      gl.uniform1i(gl.getUniformLocation(program, 'uTextureA'), 0);
+      gl.uniform1i(gl.getUniformLocation(program, 'uTextureB'), 1);
+      texA = GLEngine.loadTexture(gl, beforeImg);
+      texB = GLEngine.loadTexture(gl, afterImg);
+      resize();
+      beforeImg.style.visibility = 'hidden';
+      afterImg.style.visibility = 'hidden';
+      canvas.style.opacity = '1';
+      canvas.addEventListener('webglcontextlost', (e) => {
+        e.preventDefault(); useGL = false; activeGLContexts--; canvas.style.opacity = '0';
+        beforeImg.style.visibility = 'visible'; afterImg.style.visibility = 'visible';
+      });
+      window.addEventListener('resize', resize);
+    }
+
+    setBeforeWidth();
+    if (useGL) {
+      if (beforeImg.complete && afterImg.complete) setupGL();
+      else {
+        let loaded = 0;
+        const onLoad = () => { if (++loaded === 2) setupGL(); };
+        beforeImg.addEventListener('load', onLoad, { once: true });
+        afterImg.addEventListener('load', onLoad, { once: true });
+      }
+    }
+
+    function updateFromClientX(clientX) {
+      const rect = slider.getBoundingClientRect();
+      target = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+      if (!raf) raf = requestAnimationFrame(render);
+    }
+
+    let dragging = false;
+    slider.addEventListener('pointerdown', (e) => { dragging = true; slider.setPointerCapture(e.pointerId); updateFromClientX(e.clientX); });
+    slider.addEventListener('pointermove', (e) => { if (dragging) updateFromClientX(e.clientX); });
+    slider.addEventListener('pointerup', () => { dragging = false; });
+    slider.addEventListener('pointercancel', () => { dragging = false; });
+    slider.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { target = Math.max(0, target - 5); if (!raf) raf = requestAnimationFrame(render); }
+      if (e.key === 'ArrowRight') { target = Math.min(100, target + 5); if (!raf) raf = requestAnimationFrame(render); }
+    });
+
+    // Coupe le rendu quand le slider sort du viewport (perf)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        visible = entry.isIntersecting;
+        if (visible && Math.abs(target - current) > 0.05 && !raf) raf = requestAnimationFrame(render);
+        if (!visible && raf) { cancelAnimationFrame(raf); raf = null; }
+      });
+    }, { threshold: 0.05 });
+    io.observe(slider);
+
+    // Reveal scroll-driven (dévoile la transformation en scrollant) — scrub désactivé sous 769px (perf mobile)
+    // et pour prefers-reduced-motion (ScrollTrigger n'est enregistré que dans ce cas)
+    if (!prefersReducedMotion) {
+      gsap.matchMedia().add('(min-width: 769px)', () => {
+        const st = ScrollTrigger.create({
+          trigger: slider, start: 'top 70%', end: 'top 20%', scrub: 0.6,
+          onUpdate: (self) => { target = Math.max(50, 100 - self.progress * 100); if (!raf) raf = requestAnimationFrame(render); }
+        });
+        return () => st.kill();
+      });
+    }
+
+    window.addEventListener('resize', setBeforeWidth);
   });
-  slider.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    updateFromClientX(e.clientX);
-  });
-  slider.addEventListener('pointerup', () => { dragging = false; });
-  slider.addEventListener('pointercancel', () => { dragging = false; });
-
-  // Clavier (accessibilité)
-  slider.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') { target = Math.max(0, target - 5); if (!raf) raf = requestAnimationFrame(render); }
-    if (e.key === 'ArrowRight') { target = Math.min(100, target + 5); if (!raf) raf = requestAnimationFrame(render); }
-  });
-
-  window.addEventListener('resize', setWidth);
-});
+}
 
 // ─── Lightbox ───
 function initLightbox() {
@@ -301,4 +477,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroScroll();
   renderProjets();
   initLightbox();
+  initLiquidSliders();
+
+  waitForImages().then(() => {
+    if (!prefersReducedMotion) ScrollTrigger.refresh();
+    initHoverDistortion();
+  });
 });
