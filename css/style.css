@@ -128,6 +128,7 @@ a {
 .nav-logo {
   display: flex;
   align-items: center;
+  position: relative;
   text-decoration: none;
   color: inherit;
 }
@@ -138,6 +139,21 @@ a {
   display: block;
   transition: opacity .3s ease;
 }
+
+.nav-logo__img--dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+
+.nav-logo__img--white {
+  opacity: 0;
+}
+
+/* Navbar transparente (hero, tout en haut) : logo blanc visible */
+.navbar.transparent .nav-logo__img--white { opacity: 1; }
+.navbar.transparent .nav-logo__img--dark { opacity: 0; }
 
 .logo-sub {
   display: block;
