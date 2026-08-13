@@ -4,26 +4,22 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ═══════════════════════════════════════════
-// PRELOADER — logo plein écran → navbar
+// PRELOADER — logo en fondu, sans rideau
 // ═══════════════════════════════════════════
 function runPreloader() {
   const preloader = document.querySelector('.preloader');
   const preloaderLogo = document.querySelector('.preloader__logo');
-  const navLogo = document.querySelector('.nav-logo__img');
+  document.documentElement.style.overflow = 'hidden';
 
-  if (!preloader) return Promise.resolve();
-
-  if (prefersReducedMotion || !preloaderLogo || typeof gsap === 'undefined') {
-    preloader.remove();
+  if (!preloader || !preloaderLogo || prefersReducedMotion || typeof gsap === 'undefined') {
+    if (preloader) preloader.remove();
     document.documentElement.style.overflow = '';
     return Promise.resolve();
   }
 
-  document.documentElement.style.overflow = 'hidden';
-
   return new Promise((resolve) => {
     const tl = gsap.timeline({
-      defaults: { ease: 'power3.inOut' },
+      defaults: { ease: 'power2.out' },
       onComplete: () => {
         preloader.remove();
         document.documentElement.style.overflow = '';
@@ -31,30 +27,13 @@ function runPreloader() {
       }
     });
 
-    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 0.9, ease: 'power2.out' })
-      .to(preloaderLogo, { duration: 0.4 }) // petite pause, le temps de "voir" le logo
+    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 0.9 })
+      .to(preloaderLogo, { duration: 0.5 }) // pause, le temps de "voir" le logo
       .to(preloader, {
-        clipPath: 'inset(0 0 100% 0)',
-        duration: 1,
-        ease: 'power4.inOut'
-      }, '+=0.1');
-
-    // Le logo du preloader migre visuellement vers la position du logo dans la navbar
-    if (navLogo) {
-      const navRect = () => navLogo.getBoundingClientRect();
-      const preRect = () => preloaderLogo.getBoundingClientRect();
-      tl.add(() => {
-        const nr = navRect();
-        const pr = preRect();
-        const scaleRatio = nr.width / pr.width;
-        const deltaX = (nr.left + nr.width / 2) - (pr.left + pr.width / 2);
-        const deltaY = (nr.top + nr.height / 2) - (pr.top + pr.height / 2);
-        gsap.to(preloaderLogo, {
-          x: deltaX, y: deltaY, scale: scaleRatio,
-          duration: 1, ease: 'power4.inOut'
-        });
-      }, '<');
-    }
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.inOut'
+      });
   });
 }
 
