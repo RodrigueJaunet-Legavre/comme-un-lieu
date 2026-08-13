@@ -3,6 +3,63 @@
 // ═══════════════════════════════════════════
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// ═══════════════════════════════════════════
+// PRELOADER — logo plein écran → navbar
+// ═══════════════════════════════════════════
+function runPreloader() {
+  const preloader = document.querySelector('.preloader');
+  const preloaderLogo = document.querySelector('.preloader__logo');
+  const navLogo = document.querySelector('.nav-logo__img');
+
+  if (!preloader) return Promise.resolve();
+
+  if (prefersReducedMotion || !preloaderLogo || typeof gsap === 'undefined') {
+    preloader.remove();
+    document.body.style.overflow = '';
+    return Promise.resolve();
+  }
+
+  document.body.style.overflow = 'hidden';
+
+  return new Promise((resolve) => {
+    const tl = gsap.timeline({
+      defaults: { ease: 'power3.inOut' },
+      onComplete: () => {
+        preloader.remove();
+        document.body.style.overflow = '';
+        resolve();
+      }
+    });
+
+    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 0.9, ease: 'power2.out' })
+      .to(preloaderLogo, { duration: 0.4 }) // petite pause, le temps de "voir" le logo
+      .to(preloader, {
+        clipPath: 'inset(0 0 100% 0)',
+        duration: 1,
+        ease: 'power4.inOut'
+      }, '+=0.1');
+
+    // Le logo du preloader migre visuellement vers la position du logo dans la navbar
+    if (navLogo) {
+      const navRect = () => navLogo.getBoundingClientRect();
+      const preRect = () => preloaderLogo.getBoundingClientRect();
+      tl.add(() => {
+        const nr = navRect();
+        const pr = preRect();
+        const scaleRatio = nr.width / pr.width;
+        const deltaX = (nr.left + nr.width / 2) - (pr.left + pr.width / 2);
+        const deltaY = (nr.top + nr.height / 2) - (pr.top + pr.height / 2);
+        gsap.to(preloaderLogo, {
+          x: deltaX, y: deltaY, scale: scaleRatio,
+          duration: 1, ease: 'power4.inOut'
+        });
+      }, '<');
+    }
+  });
+}
+
+const preloaderPromise = runPreloader();
+
 let lenisInstance = null;
 
 if (!prefersReducedMotion) {
@@ -35,17 +92,6 @@ if (!prefersReducedMotion) {
     console.warn('Lenis non chargé (CDN indisponible), scroll natif utilisé.');
   }
 
-  // ── Animation d'entrée du logo au chargement ──
-  if (typeof gsap !== 'undefined') {
-    gsap.from('.nav-logo__img', {
-      opacity: 0,
-      scale: 0.7,
-      duration: 1,
-      ease: 'back.out(1.6)',
-      delay: 0.2
-    });
-  }
-
   // Reveal texte (titres sans enfants HTML)
   document.querySelectorAll('.reveal-mask').forEach((el) => {
     const text = el.textContent;
@@ -75,14 +121,16 @@ if (!prefersReducedMotion) {
     );
   });
 
-  // Hero timeline (index.html)
-  if (document.querySelector('.hero-timeline')) {
-    gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 })
-      .from('.hero-logo', { y: 30, opacity: 0, duration: 0.8 })
-      .from('.hero-tagline', { y: 20, opacity: 0, duration: 0.7 }, '-=0.4')
-      .from('.hero-cta', { y: 20, opacity: 0, duration: 0.7 }, '-=0.4');
-    gsap.to('.hero-bg', { scale: 1.05, duration: 9, ease: 'power1.out' });
-  }
+  // Hero timeline (index.html) — démarre après le preloader
+  preloaderPromise.then(() => {
+    if (document.querySelector('.hero-timeline')) {
+      gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 })
+        .from('.hero-logo', { y: 30, opacity: 0, duration: 0.8 })
+        .from('.hero-tagline', { y: 20, opacity: 0, duration: 0.7 }, '-=0.4')
+        .from('.hero-cta', { y: 20, opacity: 0, duration: 0.7 }, '-=0.4');
+      gsap.to('.hero-bg', { scale: 1.05, duration: 9, ease: 'power1.out' });
+    }
+  });
 
   // Transition entre pages
   const transitionEl = document.createElement('div');
