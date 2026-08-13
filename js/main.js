@@ -134,7 +134,6 @@ if (!prefersReducedMotion) {
       });
     }
   });
-  gsap.fromTo(transitionEl, { y: '0%' }, { y: '100%', duration: 0.5, ease: 'power3.inOut' });
 }
 
 // ─── Navbar scroll behavior ───
