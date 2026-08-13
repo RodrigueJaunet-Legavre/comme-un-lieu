@@ -104,9 +104,9 @@ if (!prefersReducedMotion) {
   preloaderPromise.then(() => {
     if (document.querySelector('.hero-timeline')) {
       gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 })
-        .from('.hero-logo', { y: 30, opacity: 0, duration: 0.8 })
-        .from('.hero-tagline', { y: 20, opacity: 0, duration: 0.7 }, '-=0.4')
-        .from('.hero-cta', { y: 20, opacity: 0, duration: 0.7 }, '-=0.4');
+        .to('.hero-logo', { y: 0, opacity: 0.7, duration: 0.8 })
+        .to('.hero-tagline', { y: 0, opacity: 1, duration: 0.7 }, '-=0.4')
+        .to('.hero-cta', { y: 0, opacity: 1, duration: 0.7 }, '-=0.4');
       gsap.to('.hero-bg', { scale: 1.05, duration: 9, ease: 'power1.out' });
     }
   });

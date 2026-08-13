@@ -333,6 +333,17 @@ a {
   color: var(--noir);
 }
 
+/* État initial caché pour les éléments du hero, avant l'animation GSAP */
+.hero-logo,
+.hero-tagline,
+.hero-cta {
+  opacity: 0;
+}
+
+.hero-logo { transform: translateY(30px); }
+.hero-tagline,
+.hero-cta { transform: translateY(20px); }
+
 /* ─── Manifeste ─── */
 .manifeste {
   text-align: center;
@@ -1183,4 +1194,5 @@ a {
   .reveal-line { transform: none !important; }
   .reveal-image { clip-path: none !important; }
   .custom-cursor, .page-transition { display: none !important; }
+  .hero-logo, .hero-tagline, .hero-cta { opacity: 1 !important; transform: none !important; }
 }
