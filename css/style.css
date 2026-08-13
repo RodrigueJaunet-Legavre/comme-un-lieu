@@ -32,16 +32,25 @@ body {
   color: var(--noir);
   font-weight: 300;
   line-height: 1.7;
-  overflow: hidden; /* bloque le scroll pendant le preloader, retiré en JS après */
 }
 
-/* ── PRELOADER ──────────────────────────────────────────── */
+/* ── PRELOADER (verre dépoli) ───────────────────────────── */
 .preloader {
   position: fixed; inset: 0;
-  background: var(--ivoire);
+  background: rgba(246, 244, 239, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   z-index: 20000;
   display: flex; align-items: center; justify-content: center;
 }
+
+/* Fallback pour les navigateurs qui ne supportent pas backdrop-filter */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .preloader {
+    background: var(--ivoire);
+  }
+}
+
 .preloader__logo {
   width: 180px;
   height: auto;

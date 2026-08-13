@@ -15,18 +15,18 @@ function runPreloader() {
 
   if (prefersReducedMotion || !preloaderLogo || typeof gsap === 'undefined') {
     preloader.remove();
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     return Promise.resolve();
   }
 
-  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
 
   return new Promise((resolve) => {
     const tl = gsap.timeline({
       defaults: { ease: 'power3.inOut' },
       onComplete: () => {
         preloader.remove();
-        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
         resolve();
       }
     });
