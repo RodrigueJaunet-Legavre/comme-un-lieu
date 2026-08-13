@@ -35,6 +35,17 @@ if (!prefersReducedMotion) {
     console.warn('Lenis non chargé (CDN indisponible), scroll natif utilisé.');
   }
 
+  // ── Animation d'entrée du logo au chargement ──
+  if (typeof gsap !== 'undefined') {
+    gsap.from('.nav-logo__img', {
+      opacity: 0,
+      scale: 0.7,
+      duration: 1,
+      ease: 'back.out(1.6)',
+      delay: 0.2
+    });
+  }
+
   // Reveal texte (titres sans enfants HTML)
   document.querySelectorAll('.reveal-mask').forEach((el) => {
     const text = el.textContent;
