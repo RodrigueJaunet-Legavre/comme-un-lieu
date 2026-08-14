@@ -27,11 +27,16 @@ function runPreloader() {
       }
     });
 
-    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 0.9 })
-      .to(preloaderLogo, { duration: 0.5 }) // pause, le temps de "voir" le logo
+    tl.to(preloaderLogo, {
+        opacity: 1,
+        scale: 1,
+        duration: 1.6,
+        ease: 'power2.out'
+      })
+      .to(preloaderLogo, { duration: 0.7 }) // pause avant le fondu de sortie
       .to(preloader, {
         opacity: 0,
-        duration: 0.8,
+        duration: 1,
         ease: 'power2.inOut'
       });
   });
