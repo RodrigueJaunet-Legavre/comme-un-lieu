@@ -392,6 +392,7 @@ a {
 
 /* ─── Featured Project (carousel accueil) ─── */
 .featured-project {
+  position: relative;
   display: flex;
   align-items: stretch;
   gap: 4px;
@@ -399,6 +400,17 @@ a {
   margin: 0 auto;
   padding: 6rem 4rem;
 }
+
+.featured-project__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(246,244,239,.85); border: none; cursor: pointer;
+  font-family: 'Jost', sans-serif; font-size: 20px; color: var(--noir);
+  z-index: 5; transition: background .2s ease;
+}
+.featured-project__arrow:hover { background: var(--ivoire); }
+.featured-project__arrow--prev { left: 16px; }
+.featured-project__arrow--next { right: 16px; }
 
 .featured-project__images {
   flex: 1;

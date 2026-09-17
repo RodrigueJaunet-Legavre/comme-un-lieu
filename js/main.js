@@ -282,7 +282,10 @@ function initFeaturedProjectCarousel() {
   const title = section.querySelector('.featured-project__title');
   const tag = section.querySelector('.featured-project__tag');
   const link = section.querySelector('.featured-project__link');
+  const prevBtn = section.querySelector('.featured-project__arrow--prev');
+  const nextBtn = section.querySelector('.featured-project__arrow--next');
   let index = 0;
+  let timer = null;
 
   function setContent(p) {
     img.src = p.image;
@@ -306,13 +309,33 @@ function initFeaturedProjectCarousel() {
     });
   }
 
-  render(index);
-  if (!prefersReducedMotion && projets.length > 1) {
-    setInterval(() => {
-      index = (index + 1) % projets.length;
-      render(index);
-    }, 5000);
+  function goTo(i) {
+    index = (i + projets.length) % projets.length;
+    render(index);
   }
+
+  function startAutoplay() {
+    clearInterval(timer);
+    if (prefersReducedMotion || projets.length <= 1) return;
+    timer = setInterval(() => goTo(index + 1), 5000);
+  }
+
+  render(index);
+  startAutoplay();
+
+  nextBtn.addEventListener('click', () => { goTo(index + 1); startAutoplay(); });
+  prevBtn.addEventListener('click', () => { goTo(index - 1); startAutoplay(); });
+
+  // Swipe tactile
+  let touchStartX = 0;
+  section.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  section.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(diff) > 40) {
+      diff > 0 ? goTo(index - 1) : goTo(index + 1);
+      startAutoplay();
+    }
+  }, { passive: true });
 }
 
 // ── BEFORE/AFTER SLIDER (Pointer Events — souris + tactile + clavier) ──
