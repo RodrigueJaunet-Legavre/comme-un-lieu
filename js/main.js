@@ -3,6 +3,18 @@
 // ═══════════════════════════════════════════
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Attend le chargement de toutes les images de la page (utile avant un ScrollTrigger.refresh())
+function waitForImages() {
+  const imgs = Array.from(document.images);
+  return Promise.all(imgs.map((img) => {
+    if (img.complete) return Promise.resolve();
+    return new Promise((resolve) => {
+      img.addEventListener('load', resolve, { once: true });
+      img.addEventListener('error', resolve, { once: true });
+    });
+  }));
+}
+
 // ═══════════════════════════════════════════
 // PRELOADER — logo en fondu, sans rideau
 // ═══════════════════════════════════════════
@@ -262,6 +274,47 @@ function renderProjets() {
   }
 }
 
+// ─── Projet en avant (carousel accueil) ───
+function initFeaturedProjectCarousel() {
+  const section = document.querySelector('.featured-project');
+  if (!section) return;
+  const img = section.querySelector('.featured-project__img');
+  const title = section.querySelector('.featured-project__title');
+  const tag = section.querySelector('.featured-project__tag');
+  const link = section.querySelector('.featured-project__link');
+  let index = 0;
+
+  function setContent(p) {
+    img.src = p.image;
+    img.alt = p.titre;
+    title.textContent = p.titre;
+    tag.textContent = p.tag;
+    link.href = p.lien;
+  }
+
+  function render(i) {
+    const p = projets[i];
+    if (prefersReducedMotion || typeof gsap === 'undefined') {
+      setContent(p);
+      return;
+    }
+    gsap.to(img, {
+      opacity: 0, duration: 0.4, onComplete: () => {
+        setContent(p);
+        gsap.to(img, { opacity: 1, duration: 0.4 });
+      }
+    });
+  }
+
+  render(index);
+  if (!prefersReducedMotion && projets.length > 1) {
+    setInterval(() => {
+      index = (index + 1) % projets.length;
+      render(index);
+    }, 5000);
+  }
+}
+
 // ── BEFORE/AFTER SLIDER (Pointer Events — souris + tactile + clavier) ──
 document.querySelectorAll('.ba-slider').forEach((slider) => {
   const beforeWrap = slider.querySelector('.ba-slider__before-wrap');
@@ -348,4 +401,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroScroll();
   renderProjets();
   initLightbox();
+
+  waitForImages().then(() => {
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    initFeaturedProjectCarousel();
+  });
 });
