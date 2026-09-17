@@ -219,6 +219,12 @@ const projets = [
     tag: "Rénovation complète",
     image: "images/realisations/appartement-paris-16/ilot-apres.png",
     lien: "realisations/appartement-paris-16.html"
+  },
+  {
+    titre: "Square Tolstoï — Paris 16e",
+    tag: "Rénovation complète",
+    image: "images/realisations/square-tolstoi-paris-16/sdb-apres.jpg",
+    lien: "realisations/square-tolstoi-paris-16.html"
   }
 ];
 

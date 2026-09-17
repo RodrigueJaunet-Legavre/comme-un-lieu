@@ -1047,6 +1047,27 @@ a {
   object-fit: cover;
 }
 
+/* ─── Image légendée (photo isolée + légende) ─── */
+.image-legende {
+  max-width: 700px;
+  margin: 3rem auto 0;
+}
+
+.image-legende img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-legende-text {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gris-clair);
+  text-align: center;
+  margin-top: 1rem;
+}
+
 /* ─── Lightbox ─── */
 .lightbox {
   display: none;

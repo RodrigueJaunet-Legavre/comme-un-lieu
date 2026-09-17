@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Tolstoï — Paris 16e — Rénovation complète | Comme un Lieu</title>
+  <meta name="description" content="Rénovation complète d'un appartement Square Tolstoï, Paris 16e — entrée en parquet chevrons, cuisine ouverte, chambres et salle de bain en marbre. Réalisé par Corinne Joubert.">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <a href="/" class="nav-logo" data-cursor="false">
+      <img src="../images/logo/logo.png" alt="Comme un Lieu" class="nav-logo__img">
+      <span class="logo-sub">Rénovation — Architecture d'Intérieur</span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="../index.html" class="nav-link">Accueil</a>
+      <a href="../apropos.html" class="nav-link">À propos</a>
+      <a href="../realisations.html" class="nav-link active">Nos Réalisations</a>
+      <a href="../contact.html" class="nav-link">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-overlay" id="mobileOverlay">
+      <button class="overlay-close" id="overlayClose">✕</button>
+      <nav class="overlay-nav">
+        <a href="../index.html" class="overlay-link">Accueil</a>
+        <a href="../apropos.html" class="overlay-link">À propos</a>
+        <a href="../realisations.html" class="overlay-link">Nos Réalisations</a>
+        <a href="../contact.html" class="overlay-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HEADER PROJET -->
+  <section class="projet-header fade-in">
+    <a href="../realisations.html" class="retour-lien">← Toutes les réalisations</a>
+    <span class="tag">Rénovation complète</span>
+    <h1 class="projet-titre reveal-mask">Square Tolstoï — Paris 16e</h1>
+    <p class="projet-intro">Rénovation complète d'un appartement Square Tolstoï, dans le 16e arrondissement de Paris. Restructuration totale des volumes : entrée à parquet en chevrons, cuisine ouverte et épurée, chambres refaites à neuf, salle de bain habillée de marbre et toilettes à l'identité affirmée.</p>
+  </section>
+
+  <!-- SECTION ENTRÉE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Entrée</h2>
+
+    <p class="ba-slider-context reveal-mask">Une entrée réinventée avec un parquet en chevrons sur-mesure et des portes miroir qui agrandissent l'espace.</p>
+
+    <div class="galerie-secondaire">
+      <img src="../images/realisations/square-tolstoi-paris-16/entree-apres-1.jpg" alt="Entrée rénovée avec parquet en chevrons et porte miroir" class="galerie-img reveal-image">
+      <img src="../images/realisations/square-tolstoi-paris-16/entree-apres-2.jpg" alt="Vue d'ensemble de l'entrée rénovée, Square Tolstoï" class="galerie-img reveal-image">
+    </div>
+  </section>
+
+  <!-- SECTION CUISINE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Cuisine</h2>
+
+    <p class="ba-slider-context reveal-mask">D'une cuisine cloisonnée et datée à un espace ouvert, blanc et fonctionnel.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/square-tolstoi-paris-16/cuisine-apres.jpg" alt="Cuisine ouverte et blanche après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/square-tolstoi-paris-16/cuisine-avant.jpg" alt="Cuisine cloisonnée avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+  </section>
+
+  <!-- SECTION CHAMBRE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Chambre</h2>
+
+    <p class="ba-slider-context reveal-mask">Retour aux volumes bruts avant une remise à neuf complète, moulures et parquet en chevrons compris.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/square-tolstoi-paris-16/chambre-apres.jpg" alt="Chambre rénovée avec moulures et parquet en chevrons">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/square-tolstoi-paris-16/chambre-avant.jpg" alt="Chambre à l'état brut avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+  </section>
+
+  <!-- SECTION WC -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">WC</h2>
+
+    <p class="ba-slider-context reveal-mask">Un petit espace transformé en bijou graphique, habillé d'un papier peint art déco sur-mesure.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/square-tolstoi-paris-16/wc-apres.jpg" alt="Toilettes habillées d'un papier peint art déco sur-mesure">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/square-tolstoi-paris-16/wc-avant.jpg" alt="Toilettes avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <div class="image-legende">
+      <img src="../images/realisations/square-tolstoi-paris-16/wc-selection-materiaux.jpg" alt="Planche de sélection du papier peint et de l'essence de bois des WC" class="reveal-image">
+      <p class="image-legende-text reveal-mask">Sélection du papier peint et de l'essence de bois</p>
+    </div>
+  </section>
+
+  <!-- SECTION SALLE DE BAIN -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Salle de bain</h2>
+
+    <p class="ba-slider-context reveal-mask">Du carrelage d'origine à un écrin en marbre et laiton, en passant par la pose du chauffage au sol.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/square-tolstoi-paris-16/sdb-apres.jpg" alt="Salle de bain habillée de marbre et de laiton après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/square-tolstoi-paris-16/sdb-avant.jpg" alt="Salle de bain avec carrelage d'origine avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <p class="ba-slider-context reveal-mask">Coulisses du chantier</p>
+    <div class="fabrication-galerie">
+      <img src="../images/realisations/square-tolstoi-paris-16/sdb-demolition.jpg" alt="Salle de bain en cours de démolition" class="fab-img reveal-image">
+      <img src="../images/realisations/square-tolstoi-paris-16/sdb-pendant-chauffage-sol.jpg" alt="Pose du chauffage au sol dans la salle de bain" class="fab-img reveal-image">
+      <img src="../images/realisations/square-tolstoi-paris-16/sdb-pendant-sol.jpg" alt="Pose du sol de la salle de bain en cours de chantier" class="fab-img reveal-image">
+    </div>
+  </section>
+
+  <!-- CTA BANDEAU -->
+  <section class="cta-bandeau">
+    <div class="cta-inner">
+      <p class="cta-text">Un projet ? Parlons-en.</p>
+      <a href="../contact.html" class="btn-cta">Contactez-nous</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">COMME UN LIEU</div>
+        <div class="footer-tagline">Rénovation &amp; Architecture d'Intérieur à Paris</div>
+      </div>
+      <div class="footer-coords">
+        <p>6, rue Corot — 75016 Paris</p>
+        <p><a href="tel:+33627203075">+33 (0)6 27 20 30 75</a></p>
+        <p><a href="mailto:cj@comme-un-lieu.com">cj@comme-un-lieu.com</a></p>
+      </div>
+      <nav class="footer-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../apropos.html">À propos</a>
+        <a href="../realisations.html">Nos Réalisations</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-copy">© 2026 Comme un Lieu — Corinne Joubert</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="Vue agrandie">
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
