@@ -113,6 +113,15 @@ if (!prefersReducedMotion) {
     if (document.querySelector('.hero-timeline')) {
       gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 })
         .to('.hero-cta', { y: 0, opacity: 1, duration: 0.7 });
+
+      gsap.timeline({ scrollTrigger: { trigger: '.hero-intro__lead', start: 'top 90%' } })
+        .from('.hero-intro__lead p', { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.25 })
+        .to('.hero-intro__cta-line__bar', { width: '100%', duration: 0.6, ease: 'power2.out' }, '-=0.2');
+
+      gsap.to('.hero-intro__portrait', {
+        y: -20, ease: 'none',
+        scrollTrigger: { trigger: '.hero-intro', start: 'top top', end: 'bottom top', scrub: true }
+      });
     }
   });
 
