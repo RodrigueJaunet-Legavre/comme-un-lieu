@@ -1119,6 +1119,22 @@ a {
   object-fit: cover;
 }
 
+/* ─── Faubourg Saint-Antoine — photos non recadrées (contain) ─── */
+.page-faubourg .ba-slider__after,
+.page-faubourg .ba-slider__before {
+  object-fit: contain;
+  background: var(--ivoire);
+}
+.page-faubourg .galerie-img,
+.page-faubourg .galerie-grid-img {
+  object-fit: contain;
+  background: var(--ivoire);
+}
+.page-faubourg .fab-img {
+  object-fit: contain;
+  background: color-mix(in srgb, var(--noir) 6%, var(--ivoire));
+}
+
 /* ─── Image légendée (photo isolée + légende) ─── */
 .image-legende {
   max-width: 700px;

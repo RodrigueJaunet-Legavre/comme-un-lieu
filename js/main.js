@@ -241,7 +241,7 @@ const projets = [
   {
     titre: "Faubourg Saint-Antoine — Paris 11e",
     tag: "Rénovation complète",
-    image: "images/realisations/faubourg-saint-antoine-paris-11/sejour-apres-1.jpg",
+    image: "images/realisations/faubourg-saint-antoine-paris-11/sejour-apres-3.jpg",
     lien: "realisations/faubourg-saint-antoine-paris-11.html"
   }
 ];
