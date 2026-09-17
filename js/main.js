@@ -61,14 +61,16 @@ if (!prefersReducedMotion) {
       //   wheelMultiplier: 1,
       //   touchMultiplier: 2,
       // });
-      function raf(time) {
-        lenisInstance.raf(time);
+      if (lenisInstance) {
+        function raf(time) {
+          lenisInstance.raf(time);
+          requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
+        lenisInstance.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenisInstance.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
       }
-      requestAnimationFrame(raf);
-      lenisInstance.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => lenisInstance.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
     } catch (e) {
       console.warn('Lenis a échoué à s\'initialiser, scroll natif utilisé.', e);
       lenisInstance = null;
