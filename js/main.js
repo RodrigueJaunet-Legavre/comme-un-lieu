@@ -110,10 +110,7 @@ if (!prefersReducedMotion) {
   preloaderPromise.then(() => {
     if (document.querySelector('.hero-timeline')) {
       gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 })
-        .to('.hero-logo', { y: 0, opacity: 0.7, duration: 0.8 })
-        .to('.hero-tagline', { y: 0, opacity: 1, duration: 0.7 }, '-=0.4')
-        .to('.hero-cta', { y: 0, opacity: 1, duration: 0.7 }, '-=0.4');
-      gsap.to('.hero-bg', { scale: 1.05, duration: 9, ease: 'power1.out' });
+        .to('.hero-cta', { y: 0, opacity: 1, duration: 0.7 });
     }
   });
 
@@ -158,15 +155,6 @@ function initNavbar() {
       }
     });
   }
-}
-
-// ─── Hero parallax ───
-function initParallax() {
-  const heroImg = document.getElementById('heroImg');
-  if (!heroImg) return;
-  window.addEventListener('scroll', () => {
-    heroImg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
-  }, { passive: true });
 }
 
 // ─── Fade in au scroll (IntersectionObserver pour .fade-in) ───
@@ -338,7 +326,6 @@ function initLightbox() {
 // ─── Init on DOM ready ───
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
-  initParallax();
   initFadeIn();
   initMobileMenu();
   initHeroScroll();

@@ -87,33 +87,6 @@ a {
   transform: translateY(0);
 }
 
-/* ─── Scroll Indicator ─── */
-@keyframes scrollLine {
-  0%   { transform: scaleY(0); transform-origin: top; }
-  50%  { transform: scaleY(1); transform-origin: top; }
-  51%  { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
-
-.hero-scroll-indicator {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.hero-scroll-indicator span {
-  display: block;
-  width: 1px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.6);
-  animation: scrollLine 2s ease-in-out infinite;
-}
-
 /* ─── Navbar ─── */
 .navbar {
   position: fixed;
@@ -265,84 +238,62 @@ a {
   color: var(--bordeaux);
 }
 
-/* ─── Hero ─── */
-.hero {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
+/* ─── Hero (portrait + accroche) ─── */
+.hero-intro {
+  min-height: 100vh;
+  display: flex; align-items: center; gap: 64px;
+  padding: 140px 64px 64px;
+  background: var(--ivoire);
+}
+.hero-intro__portrait {
+  flex-shrink: 0; width: 320px; height: 400px;
+  border-radius: 4px; overflow: hidden;
+}
+.hero-portrait__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-intro__text { max-width: 560px; }
+.hero-intro__eyebrow {
+  font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--vert-gris); margin-bottom: 16px;
+}
+.hero-intro__title {
+  font-family: 'Jost', sans-serif; font-weight: 300; font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.15; color: var(--noir); margin-bottom: 24px;
+}
+.hero-intro__lead {
+  font-family: 'Work Sans', sans-serif; font-size: 18px; color: var(--gris-clair);
+  margin-bottom: 32px;
+}
+@media (max-width: 768px) {
+  .hero-intro { flex-direction: column; text-align: center; padding: 120px 24px 48px; }
+  .hero-intro__portrait { width: 200px; height: 250px; }
 }
 
-.hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  will-change: transform;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  color: white;
-  padding: 0 4rem;
-  max-width: 900px;
-}
-
-.hero-agency {
-  font-family: var(--font-titre);
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  opacity: 0.7;
-  margin-bottom: 1.5rem;
-}
-
-.hero-title {
-  font-family: var(--font-titre);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: 0.05em;
-  margin-bottom: 2.5rem;
-}
-
-.hero-cta {
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  color: white;
+.btn {
+  display: inline-block;
   padding: 0.9rem 2.5rem;
   font-family: var(--font-titre);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   font-size: 0.8rem;
-  display: inline-block;
   transition: all 0.3s;
 }
 
-.hero-cta:hover {
-  background: white;
+.btn--primary {
+  border: 1px solid var(--noir);
+  background: var(--noir);
+  color: var(--ivoire);
+}
+
+.btn--primary:hover {
+  background: transparent;
   color: var(--noir);
 }
 
-/* État initial caché pour les éléments du hero, avant l'animation GSAP */
-.hero-logo,
-.hero-tagline,
+/* État initial caché pour le CTA du hero, avant l'animation GSAP */
 .hero-cta {
   opacity: 0;
+  transform: translateY(20px);
 }
-
-.hero-logo { transform: translateY(30px); }
-.hero-tagline,
-.hero-cta { transform: translateY(20px); }
 
 /* ─── Manifeste ─── */
 .manifeste {
@@ -1121,7 +1072,6 @@ a {
   .logo-sub { display: none; }
   .nav-logo__img { height: 48px; }
   .burger { display: flex; }
-  .hero-content { padding: 0 1.5rem; }
   .projet-editorial { padding: 3rem 1.5rem; }
   .editorial-grid { grid-template-columns: 1fr; height: auto; }
   .editorial-main { height: 60vw; }
@@ -1194,5 +1144,5 @@ a {
   .reveal-line { transform: none !important; }
   .reveal-image { clip-path: none !important; }
   .custom-cursor, .page-transition { display: none !important; }
-  .hero-logo, .hero-tagline, .hero-cta { opacity: 1 !important; transform: none !important; }
+  .hero-cta { opacity: 1 !important; transform: none !important; }
 }
