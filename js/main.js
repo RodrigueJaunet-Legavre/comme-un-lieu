@@ -229,7 +229,7 @@ const projets = [
   {
     titre: "Appartement — Paris 16e",
     tag: "Rénovation complète",
-    image: "images/realisations/appartement-paris-16/ilot-apres.png",
+    image: "images/realisations/appartement-paris-16/ilot-apres.jpg",
     lien: "realisations/appartement-paris-16.html"
   },
   {
@@ -237,6 +237,12 @@ const projets = [
     tag: "Rénovation complète",
     image: "images/realisations/square-tolstoi-paris-16/sdb-apres.jpg",
     lien: "realisations/square-tolstoi-paris-16.html"
+  },
+  {
+    titre: "Faubourg Saint-Antoine — Paris 11e",
+    tag: "Rénovation complète",
+    image: "images/realisations/faubourg-saint-antoine-paris-11/sejour-apres-1.jpg",
+    lien: "realisations/faubourg-saint-antoine-paris-11.html"
   }
 ];
 
