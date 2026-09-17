@@ -228,7 +228,7 @@ function initHeroScroll() {
 const projets = [
   {
     titre: "Appartement — Paris 16e",
-    tag: "Rénovation complète",
+    tag: "Agencement sur mesure",
     image: "images/realisations/appartement-paris-16/ilot-apres.jpg",
     lien: "realisations/appartement-paris-16.html"
   },
@@ -350,6 +350,38 @@ function initFeaturedProjectCarousel() {
   }, { passive: true });
 }
 
+// ─── Slider "après" (hero, à côté du portrait) ───
+function initHeroAfterSlider() {
+  const wrap = document.querySelector('.hero-after-slider');
+  const img = wrap?.querySelector('.hero-after-slider__img');
+  if (!wrap || !img || projets.length === 0) return;
+  let index = 0;
+
+  function render(i) {
+    const p = projets[i];
+    if (prefersReducedMotion || typeof gsap === 'undefined') {
+      img.src = p.image;
+      img.alt = p.titre;
+      return;
+    }
+    gsap.to(img, {
+      opacity: 0, duration: 0.5, onComplete: () => {
+        img.src = p.image;
+        img.alt = p.titre;
+        gsap.to(img, { opacity: 1, duration: 0.5 });
+      }
+    });
+  }
+
+  render(index);
+  if (!prefersReducedMotion && projets.length > 1) {
+    setInterval(() => {
+      index = (index + 1) % projets.length;
+      render(index);
+    }, 4500);
+  }
+}
+
 // ── BEFORE/AFTER SLIDER (Pointer Events — souris + tactile + clavier) ──
 document.querySelectorAll('.ba-slider').forEach((slider) => {
   const beforeWrap = slider.querySelector('.ba-slider__before-wrap');
@@ -436,6 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroScroll();
   renderProjets();
   initLightbox();
+  initHeroAfterSlider();
 
   waitForImages().then(() => {
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
