@@ -160,8 +160,8 @@ a {
 
 .nav-link:hover,
 .nav-link.active {
-  border-bottom-color: var(--bordeaux);
-  color: var(--bordeaux);
+  border-bottom-color: var(--bleu-nuit);
+  color: var(--bleu-nuit);
 }
 
 .navbar.transparent .nav-link:hover,
@@ -235,7 +235,7 @@ a {
 }
 
 .overlay-link:hover {
-  color: var(--bordeaux);
+  color: var(--bleu-nuit);
 }
 
 /* ─── Hero (portrait + accroche) ─── */
@@ -378,7 +378,7 @@ a {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ivoire);
-  background: var(--bordeaux);
+  background: var(--bleu-nuit);
   padding: 0.3rem 0.8rem;
 }
 
@@ -390,12 +390,12 @@ a {
 }
 
 .lien-projet {
-  color: var(--bordeaux);
+  color: var(--bleu-nuit);
   font-size: 0.85rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-family: var(--font-titre);
-  border-bottom: 1px solid var(--bordeaux);
+  border-bottom: 1px solid var(--bleu-nuit);
   padding-bottom: 2px;
 }
 
@@ -795,7 +795,7 @@ a {
 .contact-form input:focus,
 .contact-form textarea:focus,
 .contact-form select:focus {
-  border-bottom-color: var(--bordeaux);
+  border-bottom-color: var(--bleu-nuit);
 }
 
 .contact-form textarea {
@@ -818,7 +818,7 @@ a {
 }
 
 .btn-submit:hover {
-  background: var(--bordeaux);
+  background: var(--bleu-nuit);
 }
 
 .contact-coords {
@@ -832,7 +832,7 @@ a {
 }
 
 .contact-coords a {
-  color: var(--bordeaux);
+  color: var(--bleu-nuit);
 }
 
 .contact-map iframe {
@@ -848,14 +848,14 @@ a {
 }
 
 .retour-lien {
-  color: var(--bordeaux);
+  color: var(--bleu-nuit);
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   display: inline-block;
   margin-bottom: 2rem;
   font-family: var(--font-titre);
-  border-bottom: 1px solid var(--bordeaux);
+  border-bottom: 1px solid var(--bleu-nuit);
   padding-bottom: 2px;
 }
 
@@ -951,7 +951,7 @@ a {
   padding: 6px 12px; pointer-events: none;
 }
 .ba-slider__tag--before { left: 16px; background: var(--vert-gris); }
-.ba-slider__tag--after { right: 16px; background: var(--bordeaux); }
+.ba-slider__tag--after { right: 16px; background: var(--bleu-nuit); }
 
 .ba-slider-context {
   font-family: var(--font-accent);
@@ -1139,7 +1139,7 @@ a {
 .nav-link { position: relative; }
 .nav-link::after {
   content: ''; position: absolute; left: 0; bottom: -2px;
-  width: 100%; height: 1px; background: var(--bordeaux);
+  width: 100%; height: 1px; background: var(--bleu-nuit);
   transform: scaleX(0); transform-origin: right;
   transition: transform .35s ease;
 }
