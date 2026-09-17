@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rue du Pavillon — Boulogne-Billancourt — Rénovation complète | Comme un Lieu</title>
+  <meta name="description" content="Rénovation complète d'un appartement Rue du Pavillon, Boulogne-Billancourt — cuisine, salle de bain, séjour, chambres et circulation repensés dans un esprit contemporain. Réalisé par Corinne Joubert.">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body class="page-pavillon">
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <a href="/" class="nav-logo" data-cursor="false">
+      <img src="../images/logo/logo.png" alt="Comme un Lieu" class="nav-logo__img">
+      <span class="logo-sub">Rénovation — Architecture d'Intérieur</span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="../index.html" class="nav-link">Accueil</a>
+      <a href="../apropos.html" class="nav-link">À propos</a>
+      <a href="../realisations.html" class="nav-link active">Nos Réalisations</a>
+      <a href="../contact.html" class="nav-link">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-overlay" id="mobileOverlay">
+      <button class="overlay-close" id="overlayClose">✕</button>
+      <nav class="overlay-nav">
+        <a href="../index.html" class="overlay-link">Accueil</a>
+        <a href="../apropos.html" class="overlay-link">À propos</a>
+        <a href="../realisations.html" class="overlay-link">Nos Réalisations</a>
+        <a href="../contact.html" class="overlay-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HEADER PROJET -->
+  <section class="projet-header fade-in">
+    <a href="../realisations.html" class="retour-lien">← Toutes les réalisations</a>
+    <span class="tag">Rénovation complète</span>
+    <h1 class="projet-titre reveal-mask">Rue du Pavillon — Boulogne-Billancourt</h1>
+    <p class="projet-intro">Rénovation complète d'un appartement à Boulogne-Billancourt : cuisine, salle de bain, séjour, chambres et circulation repensés dans un esprit contemporain, avec une attention particulière portée aux matériaux et aux finitions.</p>
+  </section>
+
+  <!-- SECTION CUISINE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Cuisine</h2>
+
+    <p class="ba-slider-context reveal-mask">Une cuisine repensée dans un esprit contemporain, entre matériaux naturels et lignes épurées.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/rue-du-pavillon-boulogne/cuisine-apres.jpg" alt="Cuisine contemporaine après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/rue-du-pavillon-boulogne/cuisine-avant.jpg" alt="Cuisine avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <div class="image-legende">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/cuisine-detail-coin-repas.jpg" alt="Détail du coin repas de la cuisine" class="reveal-image">
+      <p class="image-legende-text reveal-mask">Détail du coin repas</p>
+    </div>
+  </section>
+
+  <!-- SECTION SALLE DE BAIN -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Salle de bain</h2>
+
+    <p class="ba-slider-context reveal-mask">Une salle de bain entièrement reprise, avec un soin particulier apporté au choix des matériaux.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/rue-du-pavillon-boulogne/sdb-apres.jpg" alt="Salle de bain après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/rue-du-pavillon-boulogne/sdb-avant.jpg" alt="Salle de bain avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <div class="image-legende">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/sdb-detail-materiau.jpg" alt="Détail du matériau de sol de la salle de bain" class="reveal-image">
+      <p class="image-legende-text reveal-mask">Détail du matériau de sol</p>
+    </div>
+  </section>
+
+  <!-- SECTION SÉJOUR -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Séjour</h2>
+
+    <p class="ba-slider-context reveal-mask">Un séjour lumineux, réagencé pour gagner en fluidité et en caractère.</p>
+    <div class="ba-slider" tabindex="0" role="slider" aria-label="Comparateur avant après"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <img class="ba-slider__after" src="../images/realisations/rue-du-pavillon-boulogne/sejour-apres-1.jpg" alt="Séjour après rénovation">
+      <div class="ba-slider__before-wrap">
+        <img class="ba-slider__before" src="../images/realisations/rue-du-pavillon-boulogne/sejour-avant.jpg" alt="Séjour avant rénovation">
+      </div>
+      <div class="ba-slider__handle">
+        <span class="ba-slider__handle-arrows">‹›</span>
+      </div>
+      <span class="ba-slider__tag ba-slider__tag--before">Avant</span>
+      <span class="ba-slider__tag ba-slider__tag--after">Après</span>
+    </div>
+
+    <p class="ba-slider-context reveal-mask">Après</p>
+    <div class="image-legende">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/sejour-apres-2.jpg" alt="Séjour rénové, autre vue" class="reveal-image">
+    </div>
+
+    <p class="ba-slider-context reveal-mask">Détails</p>
+    <div class="galerie-grid">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/sejour-detail-cannage.jpg" alt="Détail cannage du séjour" class="galerie-grid-img lightbox-trigger reveal-image" data-cursor="true" data-src="../images/realisations/rue-du-pavillon-boulogne/sejour-detail-cannage.jpg">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/sejour-detail-applique.jpg" alt="Détail applique du séjour" class="galerie-grid-img lightbox-trigger reveal-image" data-cursor="true" data-src="../images/realisations/rue-du-pavillon-boulogne/sejour-detail-applique.jpg">
+    </div>
+  </section>
+
+  <!-- SECTION CHAMBRE D'AMIS — ARMOIRE LAQUÉE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Chambre d'amis — Armoire laquée</h2>
+
+    <p class="ba-slider-context reveal-mask">Une armoire laquée sur-mesure, pensée pour habiller la chambre d'amis avec élégance.</p>
+    <div class="bar-grid">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/chambre-invites-1.jpg" alt="Chambre d'amis avec armoire laquée sur-mesure" class="bar-img-main reveal-image" data-cursor="true">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/chambre-invites-1-detail-poignee.jpg" alt="Détail poignée de l'armoire laquée" class="bar-img-detail reveal-image" data-cursor="true">
+    </div>
+  </section>
+
+  <!-- SECTION CHAMBRE D'AMIS — ARMOIRE CHÊNE -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Chambre d'amis — Armoire chêne</h2>
+
+    <p class="ba-slider-context reveal-mask">Une seconde chambre d'amis, habillée d'une armoire en chêne massif sur-mesure.</p>
+    <div class="bar-grid">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/chambre-invites-2.jpg" alt="Chambre d'amis avec armoire en chêne sur-mesure" class="bar-img-main reveal-image" data-cursor="true">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/chambre-invites-2-detail-radiateur.jpg" alt="Détail radiateur de la chambre d'amis" class="bar-img-detail reveal-image" data-cursor="true">
+    </div>
+  </section>
+
+  <!-- SECTION CHAMBRE — PLAFOND NUAGES -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Chambre — Plafond nuages</h2>
+
+    <p class="ba-slider-context reveal-mask">Un plafond peint à la main façon nuages, pour une chambre pleine de douceur.</p>
+    <div class="bar-grid">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/chambre-nuages.jpg" alt="Chambre avec plafond peint façon nuages" class="bar-img-main reveal-image" data-cursor="true">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/chambre-nuages-detail.jpg" alt="Détail du plafond nuages" class="bar-img-detail reveal-image" data-cursor="true">
+    </div>
+  </section>
+
+  <!-- SECTION COULOIR -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Couloir</h2>
+
+    <p class="ba-slider-context reveal-mask">Une circulation repensée, jusque dans le choix des poignées.</p>
+    <div class="bar-grid">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/couloir.jpg" alt="Couloir rénové" class="bar-img-main reveal-image" data-cursor="true">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/couloir-detail-poignee.jpg" alt="Détail poignée du couloir" class="bar-img-detail reveal-image" data-cursor="true">
+    </div>
+  </section>
+
+  <!-- SECTION EXTÉRIEUR / JARDIN -->
+  <section class="projet-section fade-in">
+    <h2 class="projet-section-titre reveal-mask">Extérieur / Jardin</h2>
+
+    <div class="fabrication-galerie">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/exterieur-1.jpg" alt="Extérieur et jardin de l'appartement" class="fab-img reveal-image">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/exterieur-2.jpg" alt="Vue du jardin" class="fab-img reveal-image">
+      <img src="../images/realisations/rue-du-pavillon-boulogne/exterieur-3.jpg" alt="Vue extérieure de l'appartement" class="fab-img reveal-image">
+    </div>
+  </section>
+
+  <!-- CTA BANDEAU -->
+  <section class="cta-bandeau">
+    <div class="cta-inner">
+      <p class="cta-text">Un projet ? Parlons-en.</p>
+      <a href="../contact.html" class="btn-cta">Contactez-nous</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">COMME UN LIEU</div>
+        <div class="footer-tagline">Rénovation &amp; Architecture d'Intérieur à Paris</div>
+      </div>
+      <div class="footer-coords">
+        <p>6, rue Corot — 75016 Paris</p>
+        <p><a href="tel:+33627203075">+33 (0)6 27 20 30 75</a></p>
+        <p><a href="mailto:cj@comme-un-lieu.com">cj@comme-un-lieu.com</a></p>
+      </div>
+      <nav class="footer-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../apropos.html">À propos</a>
+        <a href="../realisations.html">Nos Réalisations</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-copy">© 2026 Comme un Lieu — Corinne Joubert</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="Vue agrandie">
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

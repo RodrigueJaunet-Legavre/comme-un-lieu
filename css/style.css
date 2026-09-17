@@ -1135,6 +1135,27 @@ a {
   background: color-mix(in srgb, var(--noir) 6%, var(--ivoire));
 }
 
+/* ─── Rue du Pavillon — photos non recadrées (contain) ─── */
+.page-pavillon .ba-slider__after,
+.page-pavillon .ba-slider__before {
+  object-fit: contain;
+  background: var(--ivoire);
+}
+.page-pavillon .galerie-img,
+.page-pavillon .galerie-grid-img {
+  object-fit: contain;
+  background: var(--ivoire);
+}
+.page-pavillon .fab-img {
+  object-fit: contain;
+  background: color-mix(in srgb, var(--noir) 6%, var(--ivoire));
+}
+.page-pavillon .bar-img-main,
+.page-pavillon .bar-img-detail {
+  object-fit: contain;
+  background: var(--ivoire);
+}
+
 /* ─── Image légendée (photo isolée + légende) ─── */
 .image-legende {
   max-width: 700px;

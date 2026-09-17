@@ -243,6 +243,12 @@ const projets = [
     tag: "Rénovation complète",
     image: "images/realisations/faubourg-saint-antoine-paris-11/sejour-apres-3.jpg",
     lien: "realisations/faubourg-saint-antoine-paris-11.html"
+  },
+  {
+    titre: "Rue du Pavillon — Boulogne-Billancourt",
+    tag: "Rénovation complète",
+    image: "images/realisations/rue-du-pavillon-boulogne/sejour-apres-1.jpg",
+    lien: "realisations/rue-du-pavillon-boulogne.html"
   }
 ];
 
