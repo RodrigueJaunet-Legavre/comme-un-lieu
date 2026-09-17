@@ -8,11 +8,22 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // ═══════════════════════════════════════════
 function runPreloader() {
   const preloader = document.querySelector('.preloader');
+  const isHome = document.body.classList.contains('page-accueil') || location.pathname === '/' || location.pathname.endsWith('/index.html');
+  const alreadyShown = sessionStorage.getItem('preloaderShown');
+
+  if (!preloader) return Promise.resolve();
+
+  if (!isHome || alreadyShown) {
+    preloader.remove();
+    return Promise.resolve();
+  }
+
+  sessionStorage.setItem('preloaderShown', '1');
   const preloaderLogo = document.querySelector('.preloader__logo');
   document.documentElement.style.overflow = 'hidden';
 
-  if (!preloader || !preloaderLogo || prefersReducedMotion || typeof gsap === 'undefined') {
-    if (preloader) preloader.remove();
+  if (!preloaderLogo || typeof gsap === 'undefined') {
+    preloader.remove();
     document.documentElement.style.overflow = '';
     return Promise.resolve();
   }
@@ -26,19 +37,9 @@ function runPreloader() {
         resolve();
       }
     });
-
-    tl.to(preloaderLogo, {
-        opacity: 1,
-        scale: 1,
-        duration: 1.6,
-        ease: 'power2.out'
-      })
-      .to(preloaderLogo, { duration: 0.7 }) // pause avant le fondu de sortie
-      .to(preloader, {
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut'
-      });
+    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out' })
+      .to(preloaderLogo, { duration: 0.7 })
+      .to(preloader, { opacity: 0, duration: 1, ease: 'power2.inOut' });
   });
 }
 
