@@ -475,3 +475,64 @@ document.addEventListener('DOMContentLoaded', () => {
     initFeaturedProjectCarousel();
   });
 });
+
+
+// ── AVANT/APRÈS : indication + démo d'invitation ──
+(function () {
+  const sliders = document.querySelectorAll('.ba-slider');
+  if (!sliders.length) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  sliders.forEach((slider) => {
+    const beforeWrap = slider.querySelector('.ba-slider__before-wrap');
+    const handle = slider.querySelector('.ba-slider__handle');
+    if (!beforeWrap || !handle) return;
+
+    const hint = document.createElement('div');
+    hint.className = 'ba-slider__hint';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.innerHTML = '<span class="ba-slider__hint-arrow">‹</span><span>Faites glisser pour comparer l’avant et l’après</span><span class="ba-slider__hint-arrow">›</span>';
+    slider.appendChild(hint);
+
+    let touched = false;
+    let demoRaf = null;
+
+    function setPos(p) {
+      beforeWrap.style.width = p + '%';
+      handle.style.left = p + '%';
+      slider.setAttribute('aria-valuenow', Math.round(p));
+    }
+    function stopDemo() {
+      if (demoRaf) { cancelAnimationFrame(demoRaf); demoRaf = null; }
+    }
+    function markTouched() {
+      if (touched) return;
+      touched = true;
+      stopDemo();
+      slider.classList.add('is-touched');
+      hint.classList.add('is-hidden');
+    }
+    ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => {
+      slider.addEventListener(ev, markTouched, { passive: true });
+    });
+
+    if (reduce || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || touched) return;
+        io.disconnect();
+        const start = performance.now();
+        const dur = 2600;
+        function step(now) {
+          if (touched) return;
+          const t = Math.min(1, (now - start) / dur);
+          setPos(50 + 25 * Math.sin(t * 2 * Math.PI));
+          if (t < 1) demoRaf = requestAnimationFrame(step);
+          else { setPos(50); demoRaf = null; }
+        }
+        setTimeout(() => { if (!touched) demoRaf = requestAnimationFrame(step); }, 600);
+      });
+    }, { threshold: 0.6 });
+    io.observe(slider);
+  });
+})();
