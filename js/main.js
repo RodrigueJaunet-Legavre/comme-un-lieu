@@ -40,18 +40,48 @@ function runPreloader() {
     return Promise.resolve();
   }
 
+  const navLogo = document.querySelector('.nav-logo__img');
+
   return new Promise((resolve) => {
-    const tl = gsap.timeline({
-      defaults: { ease: 'power2.out' },
-      onComplete: () => {
-        preloader.remove();
-        document.documentElement.style.overflow = '';
-        resolve();
-      }
-    });
-    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out' })
-      .to(preloaderLogo, { duration: 0.7 })
-      .to(preloader, { opacity: 0, duration: 1, ease: 'power2.inOut' });
+    let released = false;
+    const release = () => { if (!released) { released = true; resolve(); } };
+    const finish = () => {
+      preloader.remove();
+      document.documentElement.style.overflow = '';
+      gsap.from('.navbar .logo-sub, .navbar .navbar-nav, .navbar .burger', {
+        opacity: 0, y: -6, duration: 0.7, stagger: 0.08, ease: 'power2.out', clearProps: 'all'
+      });
+      release();
+    };
+
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' }, onComplete: finish });
+    tl.to(preloaderLogo, { opacity: 1, scale: 1, duration: 1.4 })
+      .to(preloaderLogo, { duration: 0.6 });
+
+    if (navLogo) {
+      let d = null;
+      const measure = () => {
+        const from = preloaderLogo.getBoundingClientRect();
+        const to = navLogo.getBoundingClientRect();
+        return {
+          dx: (to.left + to.width / 2) - (from.left + from.width / 2),
+          dy: (to.top + to.height / 2) - (from.top + from.height / 2),
+          s: to.width / from.width
+        };
+      };
+      tl.add('fly')
+        .to(preloaderLogo, {
+          x: () => (d = measure()).dx,
+          y: () => d.dy,
+          scale: () => d.s,
+          duration: 1.3, ease: 'power3.inOut'
+        }, 'fly')
+        .to(preloader, { '--bg': 0, duration: 1, ease: 'power2.inOut' }, 'fly+=0.35')
+        .call(release, null, 'fly+=0.7');
+    } else {
+      tl.to(preloaderLogo, { opacity: 0, duration: 0.8 })
+        .to(preloader, { '--bg': 0, duration: 0.8, ease: 'power2.inOut' }, '<');
+    }
   });
 }
 
@@ -469,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProjets();
   initLightbox();
   initHeroAfterSlider();
+  initHeroFull();
 
   waitForImages().then(() => {
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
@@ -536,3 +567,75 @@ document.addEventListener('DOMContentLoaded', () => {
     io.observe(slider);
   });
 })();
+
+
+// ─── Hero plein écran : diaporama des réalisations (après) ───
+function initHeroFull() {
+  const hero = document.querySelector('.hero-full');
+  if (!hero || typeof projets === 'undefined') return;
+  const list = projets.filter((p) => p && p.image && p.hero !== false);
+  if (!list.length) return;
+
+  const veil = hero.querySelector('.hero-full__veil');
+  const caption = hero.querySelector('.hero-full__caption');
+  const capTag = hero.querySelector('.hero-full__caption-tag');
+  const capTitle = hero.querySelector('.hero-full__caption-title');
+  const dotsWrap = hero.querySelector('.hero-full__dots');
+
+  const slides = list.map((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-full__slide';
+    const img = document.createElement('img');
+    img.src = p.image;
+    img.alt = p.titre || '';
+    img.decoding = 'async';
+    if (i > 0) img.loading = 'lazy';
+    slide.appendChild(img);
+    hero.insertBefore(slide, veil);
+    return slide;
+  });
+
+  let current = -1;
+  let timer = null;
+
+  function show(i) {
+    if (i === current) return;
+    const prev = current;
+    current = i;
+    slides.forEach((sl, k) => {
+      sl.classList.toggle('is-active', k === i);
+      if (k === prev) {
+        sl.classList.add('is-leaving');
+        setTimeout(() => sl.classList.remove('is-leaving'), 1800);
+      }
+    });
+    dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+    const p = list[i];
+    caption.style.opacity = '0';
+    setTimeout(() => {
+      capTag.textContent = p.tag || '';
+      capTitle.textContent = p.titre || '';
+      caption.setAttribute('href', p.lien || '#');
+      caption.style.opacity = '1';
+    }, prev === -1 ? 0 : 350);
+  }
+
+  function restart() {
+    if (timer) clearInterval(timer);
+    if (prefersReducedMotion || list.length < 2) return;
+    timer = setInterval(() => show((current + 1) % list.length), 6500);
+  }
+
+  const dots = list.map((p, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'hero-full__dot';
+    b.setAttribute('aria-label', p.titre || ('Réalisation ' + (i + 1)));
+    b.addEventListener('click', () => { show(i); restart(); });
+    dotsWrap.appendChild(b);
+    return b;
+  });
+
+  show(0);
+  restart();
+}
