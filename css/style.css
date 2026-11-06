@@ -1021,31 +1021,81 @@ a {
   background: var(--ivoire);
   transform: translateX(-50%);
   pointer-events: none;
+  z-index: 2;
+  box-shadow: 0 0 12px rgba(27, 27, 24, 0.35);
 }
 .ba-slider__handle::before {
   content: '';
   position: absolute; top: 50%; left: 50%;
-  width: 44px; height: 44px;
+  width: 48px; height: 48px;
   background: var(--ivoire);
   border-radius: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 0 2px 14px rgba(27, 27, 24, 0.3), 0 0 0 1px rgba(27, 27, 24, 0.08) inset;
 }
+/* Anneau de halo : signale au premier regard que la poignée se saisit */
+.ba-slider__handle::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--ivoire);
+  transform: translate(-50%, -50%);
+  animation: ba-handle-pulse 2.6s ease-out 3;
+}
+@keyframes ba-handle-pulse {
+  0%   { opacity: 0.75; transform: translate(-50%, -50%) scale(1); }
+  70%  { opacity: 0;    transform: translate(-50%, -50%) scale(1.75); }
+  100% { opacity: 0;    transform: translate(-50%, -50%) scale(1.75); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ba-slider__handle::after { animation: none; opacity: 0.4; }
+}
+/* Double chevron dessiné en CSS — le glyphe '‹›' du HTML est masqué */
 .ba-slider__handle-arrows {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Jost', sans-serif;
-  font-size: 14px; color: var(--noir);
-  z-index: 1; letter-spacing: -2px;
+  width: 24px; height: 10px;
+  font-size: 0;
+  z-index: 3;
 }
+.ba-slider__handle-arrows::before,
+.ba-slider__handle-arrows::after {
+  content: '';
+  position: absolute; top: 50%;
+  width: 7px; height: 7px;
+  border-top: 1.5px solid var(--noir);
+  border-left: 1.5px solid var(--noir);
+}
+.ba-slider__handle-arrows::before {
+  left: 1px;
+  transform: translateY(-50%) rotate(-45deg);
+}
+.ba-slider__handle-arrows::after {
+  right: 1px;
+  transform: translateY(-50%) rotate(135deg);
+}
+/* Étiquettes AVANT / APRÈS — toujours visibles, en haut de chaque moitié */
 .ba-slider__tag {
-  position: absolute; bottom: 16px;
-  font-family: 'Jost', sans-serif;
-  font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+  position: absolute; top: 14px;
+  z-index: 3;
+  font-family: var(--font-titre);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--ivoire);
-  padding: 6px 12px; pointer-events: none;
+  background: rgba(27, 27, 24, 0.58);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(246, 244, 239, 0.22);
+  border-radius: 2px;
+  padding: 7px 11px 6px;
+  pointer-events: none;
 }
-.ba-slider__tag--before { left: 16px; background: var(--vert-gris); }
-.ba-slider__tag--after { right: 16px; background: var(--bleu-nuit); }
+.ba-slider__tag--before { left: 14px; }
+.ba-slider__tag--after { right: 14px; }
 
 .ba-slider-context {
   font-family: var(--font-accent);
